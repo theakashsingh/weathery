@@ -40,7 +40,7 @@ const App = () => {
   const fetchWeatherData = async (latitude, longitude) => {
     try {
       const response = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}&days=7&aqi=no&alerts=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}&days=7&aqi=no&alerts=no`
       );
       setWeatherData(response.data);
       setHourlyWeatherData(response.data.forecast.forecastday[0].hour);
@@ -64,7 +64,7 @@ const App = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${searchTerm}&days=7&aqi=no&alerts=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${searchTerm}&days=7&aqi=no&alerts=no`
       );
       setLocationData({
         latitude: response.data.location.lat,
@@ -86,7 +86,9 @@ const App = () => {
   return (
     <div className="app">
       {loading && <LoadingCard />}
-      <Navbar onSearch={handleSearch} location={weatherData.location} />
+      {weatherData && (
+        <Navbar onSearch={handleSearch} location={weatherData.location} />
+      )}
       {weatherData && (
         <>
           <LocationInfo
